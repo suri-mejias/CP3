@@ -28,6 +28,7 @@ cat = Animal("Tom", "Cat", 21, "Male", "Common")
 frog = Animal("Jarrod", "Poison Dart Frog", 500, "Female", "Rare")
 
 # To call methods you put the name of the object.name of the method(any arguments that are needed)
+"""""
 cat.losses = 0
 frog.losses = 0
 print(cat.fight(frog))
@@ -42,7 +43,9 @@ print(frog.losses)
 cat = None
 print(cat)
 
+"""
 
+__str__(self)
 
 
 
