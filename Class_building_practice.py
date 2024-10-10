@@ -60,12 +60,21 @@ Mov19 = Movie("The Departed", 2006, "Martin Scorsese", "R", "Crime", ["Leonardo 
 Mov20 = Movie("The Lion King", 1994, "Roger Allers, Rob Minkoff", "G", "Animation", ["Matthew Broderick", "Jeremy Irons", "James Earl Jones"])
 
 
+
+
+sort_alphabetically()
+sort_chronologically()
+
+
+"""""
 print("Movies sorted alphabetically:\n")
-for movie in sorted_alphabetically:
+for movie in range(sort_alphabetically):
     print(movie)
     print()
 
+
 print("Movies sorted chronologically:\n")
-for movie in sorted_chronologically:
+for movie in range(sort_chronologically):
     print(movie)
     print()
+"""
