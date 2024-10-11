@@ -61,11 +61,11 @@ Mov20 = Movie("The Lion King", 1994, "Roger Allers, Rob Minkoff", "G", "Animatio
 
 
 print("Movies sorted alphabetically:\n")
-for movie in sorted_alphabetically:
+for movie in sort_alphabetically:
     print(movie)
     print()
 
 print("Movies sorted chronologically:\n")
-for movie in sorted_chronologically:
+for movie in sort_chronologically:
     print(movie)
     print()
