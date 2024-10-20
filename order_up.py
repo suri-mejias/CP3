@@ -58,8 +58,12 @@ class OrderUp:
         current_item = getattr(self, category)
         if current_item: 
             print(f"\nYour current {category} is: {current_item}") 
-        new_item = self.ask_for_item(category) 
+        new_item = self.ask_for_item(category)
+        if new_item:
+            if current_item:
+                self.total-= self.menu[category][current_item] 
         setattr(self, category, new_item)
+        self.total += self.menu[category][new_item]
 
 menu = {
     "drink": {"coke": 3.0, "water": 0.0, "wine": 9.0},
@@ -73,10 +77,22 @@ order.place_order()
 order.print_order()
 
 # Allows the user to change an item
-change = input("\nWould you like to change an item in your order?(yes/no): ").lower()
-if change == "yes":
-    category_to_change = input("Which category would you like to change? (drink/appetizer/main course/sides/dessert): ").lower()
-    order.change_item(category_to_change) 
+while True:
+    change = input("\nWould you like to change an item in your order?(yes/no): ").lower()
+    if change == "yes":
+        category_to_change = input("Which category would you like to change? (drink/appetizer/main course/sides/dessert): ").lower()
+        if category_to_change in ["drink", "appetizer", "main course", "sides", "dessert"]:
+            order.change_item(category_to_change) 
+            order.print_order()
+
+        else:
+            print("Thats not a category, choose again.")
+
+    elif change == "no":
+        print("Alright good choice!")
+        break
+    else:
+        print("Please say yes or no.")
 
 
-order.print_order()
+
