@@ -31,3 +31,12 @@ class Sundae(IceCream):
         self.topping_name = topping_name
         self.topping_price = topping_price
         super().__init__(name, scoop_count, price_per_scoop)
+
+class Order():
+    def main():
+        Candy("Candy Corn", 1.5, .25)
+        Candy("Gummy Bears", .25, .35)
+        Cookie("Chocolate Chip", 6, 3.99)
+        IceCream("Pistachio", 2, .79)
+        Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29)
+        Cookie("Oatmeal Raisin", 2, 3.45)
