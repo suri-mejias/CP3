@@ -1,3 +1,17 @@
+class Information:
+  def __init__(self):
+    self.first_name = input('Enter their first name: ')
+    self.last_name = input('Enter their last name: ')
+    self.personal_phone = input('Enter their personal phone number: ')
+    self.personal_email = input('Enter their personal email address: ')
+    self.work_phone = input('Enter their work phone number: ')
+    self.work_email = input('Enter their work email address: ')
+    self.title = input('Enter their work title: ')
+    
+    def __add__(self, new_contact):
+        self.contact_list.append(new_contact)
+
+
 class Contact:
     def __init__(self,name,work_phone,personal_phone,work_email,personal_email):
         self.name = name
@@ -5,13 +19,6 @@ class Contact:
         self.personal_phone = personal_phone
         self.work_email = work_email
         self.personal_email = personal_email
-
-class Contacts:
-    def __init__(self):
-        self.view = 'quit'
-        self.contact_list = []
-        self.choice = None
-        self.index = None
 
     def display(self):
         while True:
@@ -25,10 +32,10 @@ class Contacts:
                 print('\nClosing the contact list..')
                 break
 
-        def show_list(self):
-            print('Contact List:')
-            for i, contact in enumerate(self.contact_list):
-                print(f'{i+1}. {contact.name}')
+    def show_list(self):
+        print('Contact List:')
+        for i, contact in enumerate(self.contact_list):
+            print(f'{i+1}. {contact.name}')
 
     def show_info(self):
         if self.index is not None and 0 <= self.index < len(self.contact_list):
@@ -49,6 +56,8 @@ class Contacts:
         personal_email = input('Enter personal email: ')
         self.contact_list.append(Contact(name, work_phone, personal_phone, work_email, personal_email))
 
-if __name__ == '__main__':
-    contacts = Contacts()
-    contacts.display()
+contact = Contact()
+contact.display()
+
+
+
