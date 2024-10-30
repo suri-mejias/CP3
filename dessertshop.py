@@ -2,26 +2,37 @@ from dessert import (
     Candy,
     Cookie,
     IceCream,
-    Sundaeer
+    Sundae
 )
 
-class Order():
+class Order:
     
-    def __init__(self, order = []):
-        self.order = order
+    def __init__(self):
+        self.order = []
 
-    def __str__(self);
-        for item in self.order:
-            print(f'{item}')
+    def add(self, dessert_item):
+        self.order.append(dessert_item)
         
-    def add(self, item):
-        self.order.append(item)
+    def __len__(self):
+        return len(self.order)
+    
+    def __str__(self):
+        order_string = ""
+        for item in self.order:
+            order_string += f"{item.name}\n"
+        return order_string
 
     
 def main():
-    order.add((Candy("Candy Corn", 1.5, .25)))
-    order.add(Candy("Gummy Bears", .25, .35)
-    Cookie("Chocolate Chip", 6, 3.99)
-    IceCream("Pistachio", 2, .79)
-    Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29)
-    Cookie("Oatmeal Raisin", 2, 3.45)
+    order = Order()
+    order.add(Candy("Candy Corn", 1.5, .25))
+    order.add(Candy("Gummy Bears", .25, .35))
+    order.add(Cookie("Chocolate Chip", 6, 3.99))
+    order.add(IceCream("Pistachio", 2, .79))
+    order.add(Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29))
+    order.add(Cookie("Oatmeal Raisin", 2, 3.45))
+    print(order)
+    print("Total number of items in order: ", len(order))
+
+if __name__ == "__main__":
+    main()
