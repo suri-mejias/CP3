@@ -1,63 +1,82 @@
 class Information:
-  def __init__(self):
-    self.first_name = input('Enter their first name: ')
-    self.last_name = input('Enter their last name: ')
-    self.personal_phone = input('Enter their personal phone number: ')
-    self.personal_email = input('Enter their personal email address: ')
-    self.work_phone = input('Enter their work phone number: ')
-    self.work_email = input('Enter their work email address: ')
-    self.title = input('Enter their work title: ')
+    def __init__(self):
+        self.first_name = input('Enter their first name: ')
+        self.last_name = input('Enter their last name: ')
+        self.personal_phone = input('Enter their personal phone number: ')
+        self.personal_email = input('Enter their personal email address: ')
+        self.work_phone = input('Enter their work phone number: ')
+        self.work_email = input('Enter their work email address: ')
+        self.title = input('Enter their work title: ')
     
+    def display_info(self):
+        print(f'\n{self.first_name} {self.last_name}')
+        print(f'Personal phone number: {self.personal_phone}')
+        print(f'Personal email address: {self.personal_email}')
+        print(f'Work title: {self.title}')
+        print(f'Work phone number: {self.work_phone}')
+        print(f'Work email address: {self.work_email}')
+
+class Contacts:
+    def __init__(self):
+        self.contact_list = []
+        self.current_index = 0
+        self.view = 'list'
+
+    def display_contacts(self):
+        for index, contact in enumerate(self.contact_list):
+            print(f"{index + 1}. {contact.first_name} {contact.last_name}")
+
     def __add__(self, new_contact):
         self.contact_list.append(new_contact)
 
+    def show_list(self):
+        print()
+        if len(self.contact_list) == 0:
+            self.choice = input('(A)dd a new contact \n(Q)uit \n> ').lower()
+        else:
+            for index, contact in enumerate(self.contact_list):
+                print(f"{index + 1}) {contact.first_name} {contact.last_name}")
+            self.choice = input('\n(#) Select a name \n(A)dd a new contact\n(Q)uit \n> ').lower()
+        self.handle_choice()
 
-class Contact:
-    def __init__(self,name,work_phone,personal_phone,work_email,personal_email):
-        self.name = name
-        self.work_phone = work_phone
-        self.personal_phone = personal_phone
-        self.work_email = work_email
-        self.personal_email = personal_email
+    def display_contact_info(self):
+        if 0 <= self.current_index < len(self.contact_list):
+            self.contact_list[self.current_index].display_info()
+        else:
+            print("Invalid index.")
+
+    def handle_choice(self):
+        if self.choice == 'q':
+            self.view = 'quit'
+        elif self.choice == 'a' and self.view == 'list':
+            self.view = 'add'
+        elif self.choice.isnumeric() and self.view == 'list':
+            index = int(self.choice) - 1
+            if index >= 0 and index < len(self.contact_list):
+                self.index = index
+                self.view = 'info'
+        elif self.choice == 'c' and self.view == 'info':
+            self.view = 'list'
+        elif self.choice == 'n' and self.view == 'info':
+            self.index = self.index + 1 if self.index + 1 < len(self.contact_list) else 0
+        elif self.choice == 'p' and self.view == 'info':
+            self.index = self.index - 1 if self.index - 1 >= 0 else len(self.contact_list) - 1
 
     def display(self):
         while True:
             if self.view == 'list':
                 self.show_list()
             elif self.view == 'info':
-                self.show_info()
+                self.display_contact_info()
             elif self.view == 'add':
-                self.add_contact()
+                self + Information()
+                self.view = 'list'
             elif self.view == 'quit':
-                print('\nClosing the contact list..')
-                break
+                print('\nClosing the contact list...\n')
+                break       
 
-    def show_list(self):
-        print('Contact List:')
-        for i, contact in enumerate(self.contact_list):
-            print(f'{i+1}. {contact.name}')
-
-    def show_info(self):
-        if self.index is not None and 0 <= self.index < len(self.contact_list):
-            contact = self.contact_list[self.index]
-            print(f'Name: {contact.name}')
-            print(f'Work Phone: {contact.work_phone}')
-            print(f'Personal Phone: {contact.personal_phone}')
-            print(f'Work Email: {contact.work_email}')
-            print(f'Personal Email: {contact.personal_email}')
-        else:
-            print('Invalid contact index.')
-
-    def add_contact(self):
-        name = input('Enter name: ')
-        work_phone = input('Enter work phone number: ')
-        personal_phone = input('Enter personal phone number: ')
-        work_email = input('Enter work email: ')
-        personal_email = input('Enter personal email: ')
-        self.contact_list.append(Contact(name, work_phone, personal_phone, work_email, personal_email))
-
-contact = Contact()
-contact.display()
+contacts = Contacts()
+contacts.display()
 
 
 
