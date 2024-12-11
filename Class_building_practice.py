@@ -1,23 +1,40 @@
 class Movie:
-    def __init__(self, title, release_year, director, rating, genre, cast):
+    def __init__(self, title, year, director, rating, genre, cast):
         self.title = title
-        self.release_year = release_year
+        self.year = year
         self.director = director
         self.rating = rating
         self.genre = genre
         self.cast = cast
 
     def __str__(self):
-        return f"Title: {self.title}\nRelease Year: {self.release_year}\nDirector: {self.director}\nRating: {self.rating}\nGenre: {self.genre}\nCast: {', '.join(self.cast)}"
-    
-    def sort_alphabetically(self, movies):
-        return sorted(movies, key=lambda movie: movie.title)
+        return (f"Title: {self.title}\nYear: {self.year}\nDirector: {self.director}\n"
+                f"Rating: {self.rating}\nGenre: {self.genre}\nCast: {', '.join(self.cast)}")
 
-    def sort_chronologically(self, movies):
-        return sorted(movies, key=lambda movie: movie.release_year)
+class MovieManager:
+    def __init__(self, movies):
+        self.movies = movies
 
+    def sort_movies_alpha(self):
+        def get_title(movie):
+            return movie.title
+        return sorted(self.movies, key=get_title)
 
-# Movie objects
+    def sort_movies_chrono(self):
+        def get_year(movie):
+            return movie.year
+        return sorted(self.movies, key=get_year)
+
+    def search_by_genre(self, genre):
+        return [movie for movie in self.movies if movie.genre.lower() == genre.lower()]
+
+    def search_by_director(self, director):
+        return [movie for movie in self.movies if movie.director.lower() == director.lower()]
+
+    def search_by_cast(self, actor):
+        return [movie for movie in self.movies if actor.lower() in [member.lower() for member in movie.cast]]
+
+# Sample movies
 movies = [
     Movie("The Shawshank Redemption", 1994, "Frank Darabont", "R", "Drama", ["Tim Robbins", "Morgan Freeman"]),
     Movie("Pulp Fiction", 1994, "Quentin Tarantino", "R", "Crime", ["John Travolta", "Uma Thurman", "Samuel L. Jackson"]),
@@ -37,19 +54,28 @@ movies = [
     Movie("Saving Private Ryan", 1998, "Steven Spielberg", "R", "War", ["Tom Hanks", "Matt Damon", "Tom Sizemore"]),
     Movie("Jurassic Park", 1993, "Steven Spielberg", "PG-13", "Adventure", ["Sam Neill", "Laura Dern", "Jeff Goldblum"]),
     Movie("The Departed", 2006, "Martin Scorsese", "R", "Crime", ["Leonardo DiCaprio", "Matt Damon", "Jack Nicholson"]),
-    Movie("The Lion King", 1994, "Roger Allers, Rob Minkoff", "G", "Animation", ["Matthew Broderick", "Jeremy Irons", "James Earl Jones"])
+    Movie("The Lion King", 1994, "Roger Allers, Rob Minkoff", "G", "Animation", ["Matthew Broderick", "Jeremy Irons", "James Earl Jones"]),
+    Movie("Eternal Sunshine of the Spotless Mind", 2004, "Michel Gondry", "R", "Romance", ["Jim Carrey", "Kate Winslet", "Kirsten Dunst"]),
 ]
 
-# Sorts movies alphabetically
-sort_by_title = Movie.sort_alphabetically(None, movies)
-print("Movies sorted alphabetically:\n")
-for movie in sorted_alphabetically:
-    print(movie)
-    print()
+manager = MovieManager(movies)
 
-# Sorts movies chronologically
-sort_by_yr = Movie.sort_chronologically(None, movies)
-print("Movies sorted chronologically:\n")
-for movie in sorted_chronologically:
-    print(movie)
-    print()
+print("Movies sorted alphabetically:")
+for movie in manager.sort_movies_alpha():
+    print(movie, "\n")
+
+print("Movies sorted chronologically:")
+for movie in manager.sort_movies_chrono():
+    print(movie, "\n")
+
+print("Search by genre (Crime):")
+for movie in manager.search_by_genre("Crime"):
+    print(movie, "\n")
+
+print("Search by director (Francis Ford Coppola):")
+for movie in manager.search_by_director("Francis Ford Coppola"):
+    print(movie, "\n")
+
+print("Search by cast (Morgan Freeman):")
+for movie in manager.search_by_cast("Morgan Freeman"):
+    print(movie, "\n")
