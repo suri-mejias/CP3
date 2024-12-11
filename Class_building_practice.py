@@ -34,6 +34,10 @@ class MovieManager:
     def search_by_cast(self, actor):
         return [movie for movie in self.movies if actor.lower() in [member.lower() for member in movie.cast]]
 
+    def sort_movies_alpha(self):
+        def get_title(movie):
+            return movie.title
+        return sorted(self.movies, key=get_title)
 
 movies = [
     Movie("The Shawshank Redemption", 1994, "Frank Darabont", "R", "Drama", ["Tim Robbins", "Morgan Freeman"]),
