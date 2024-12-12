@@ -1,6 +1,6 @@
 class Movie:
-    def __init__(self, title, year, director, rating, genre, cast):
-        self.title = title
+    def __init__(self, name, year, director, rating, genre, cast):
+        self.name = name
         self.year = year
         self.director = director
         self.rating = rating
@@ -8,36 +8,99 @@ class Movie:
         self.cast = cast
 
     def __str__(self):
-        return (f"Title: {self.title}\nYear: {self.year}\nDirector: {self.director}\n"
-                f"Rating: {self.rating}\nGenre: {self.genre}\nCast: {', '.join(self.cast)}")
+        return f"Name: {self.name}\nYear: {self.year}\nDirector: {self.director}\nRating: {self.rating}\nGenre: {self.genre}\nCast: {', '.join(self.cast)}"
 
-class MovieManager:
-    def __init__(self, movies):
-        self.movies = movies
+    def sort_movies_alpha(self, movies):
+        sorted_movies = []
+        while movies:
+            min_movie = movies[0]
+            for movie in movies:
+                if movie.name < min_movie.name:
+                    min_movie = movie
+            sorted_movies.append(min_movie)
+            movies.remove(min_movie)
+        return sorted_movies
 
-    def sort_movies_alpha(self):
-        def get_title(movie):
-            return movie.title
-        return sorted(self.movies, key=get_title)
+    def sort_movies_chrono(self, movies):
+        sorted_movies = []
+        while movies:
+            min_movie = movies[0]
+            for movie in movies:
+                if movie.year < min_movie.year:
+                    min_movie = movie
+            sorted_movies.append(min_movie)
+            movies.remove(min_movie)
+        return sorted_movies
 
-    def sort_movies_chrono(self):
-        def get_year(movie):
-            return movie.year
-        return sorted(self.movies, key=get_year)
+    def search_by_genre(self, movies, genre):
+        found_movies = []
+        for movie in movies:
+            if movie.genre.lower() == genre.lower():
+                found_movies.append(movie)
+        return found_movies
 
-    def search_by_genre(self, genre):
-        return [movie for movie in self.movies if movie.genre.lower() == genre.lower()]
+    def search_by_director(self, movies, director):
+        found_movies = []
+        for movie in movies:
+            if movie.director.lower() == director.lower():
+                found_movies.append(movie)
+        return found_movies
 
-    def search_by_director(self, director):
-        return [movie for movie in self.movies if movie.director.lower() == director.lower()]
+    def search_by_cast(self, movies, actor):
+        found_movies = []
+        for movie in movies:
+            if actor.lower() in [member.lower() for member in movie.cast]:
+                found_movies.append(movie)
+        return found_movies
 
-    def search_by_cast(self, actor):
-        return [movie for movie in self.movies if actor.lower() in [member.lower() for member in movie.cast]]
+    def display_menu(self):
+        print("\n=== Movie Management Menu ===")
+        print("1. View Movies Sorted Alphabetically")
+        print("2. View Movies Sorted Chronologically")
+        print("3. Search Movies by Genre")
+        print("4. Search Movies by Director")
+        print("5. Search Movies by Cast Member")
+        print("6. Exit")
+        print("==============================")
 
-    def sort_movies_alpha(self):
-        def get_title(movie):
-            return movie.title
-        return sorted(self.movies, key=get_title)
+    def run(self, movies):
+        while True:
+            self.display_menu()
+            choice = input("Please select an option (1-6): ")
+
+            if choice == '1':
+                print("\nMovies sorted alphabetically:")
+                sorted_movies = self.sort_movies_alpha(movies.copy())
+                for movie in sorted_movies:
+                    print(movie)
+            elif choice == '2':
+                print("\nMovies sorted chronologically:")
+                sorted_movies = self.sort_movies_chrono(movies.copy())
+                for movie in sorted_movies:
+                    print(movie)
+            elif choice == '3':
+                genre = input("Enter the genre to search for: ")
+                print(f"\nMovies in the '{genre}' genre:")
+                found_movies = self.search_by_genre(movies, genre)
+                for movie in found_movies:
+                    print(movie)
+            elif choice == '4':
+                director = input("Enter the director's name to search for: ")
+                print(f"\nMovies directed by '{director}':")
+                found_movies = self.search_by_director(movies, director)
+                for movie in found_movies:
+                    print(movie)
+            elif choice == '5':
+                actor = input("Enter the actor's name to search for: ")
+                print(f"\nMovies with '{actor}' in the cast:")
+                found_movies = self.search_by_cast(movies, actor)
+                for movie in found_movies:
+                    print(movie)
+            elif choice == '6':
+                print("Exiting the program.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
 
 movies = [
     Movie("The Shawshank Redemption", 1994, "Frank Darabont", "R", "Drama", ["Tim Robbins", "Morgan Freeman"]),
@@ -62,24 +125,5 @@ movies = [
     Movie("Eternal Sunshine of the Spotless Mind", 2004, "Michel Gondry", "R", "Romance", ["Jim Carrey", "Kate Winslet", "Kirsten Dunst"]),
 ]
 
-manager = MovieManager(movies)
-
-print("Movies sorted alphabetically:")
-for movie in manager.sort_movies_alpha():
-    print(movie, "\n")
-
-print("Movies sorted chronologically:")
-for movie in manager.sort_movies_chrono():
-    print(movie, "\n")
-
-print("Search by genre (Crime):")
-for movie in manager.search_by_genre("Crime"):
-    print(movie, "\n")
-
-print("Search by director (Francis Ford Coppola):")
-for movie in manager.search_by_director("Francis Ford Coppola"):
-    print(movie, "\n")
-
-print("Search by cast (Morgan Freeman):")
-for movie in manager.search_by_cast("Morgan Freeman"):
-    print(movie, "\n")
+manager = Movie("", 0, "", "", "", [])
+manager.run(movies)
